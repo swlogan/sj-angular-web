@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="isSidenavOpen = !isSidenavOpen">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>My Resume</span>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #sidenav
+    class="sidenav"
+    mode="over"
+    [(opened)]="isSidenavOpen"
+  >
+    <mat-nav-list>
+      <a mat-list-item routerLink="/" routerLinkActive="active">Home</a>
+      <a mat-list-item routerLink="/about" routerLinkActive="active">About</a>
+      <a mat-list-item routerLink="/skills" routerLinkActive="active">Skills</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="sidenav-content">
+    <!-- We'll leave this empty; actual routed content shows outside this -->
+  </mat-sidenav-content>
+</mat-sidenav-container>
