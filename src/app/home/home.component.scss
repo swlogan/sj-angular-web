@@ -1,23 +1,26 @@
-#bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  min-height: 100%;
-  z-index: -1;
+.gif-bg {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.gif-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.4);
 }
 
 .overlay-content {
-  position: relative;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -45%);
   z-index: 1;
-  text-align: center;
   color: white;
-  padding-top: 100px;
-  z-index: 2; /* Overlay content should be above the video */
+  text-align: center;
+  font-size: 2.5rem;
 }
-
-app-navigation {
-    position: fixed;
-    z-index: 10; /* Navigation should always be on top */
-  }

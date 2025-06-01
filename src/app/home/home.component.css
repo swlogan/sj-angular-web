@@ -1,0 +1,55 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f4f4;
+}
+
+.nav {
+  background-color: #333;
+  padding: 1em;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  list-style: none;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hero {
+  text-align: center;
+  padding: 4em 1em;
+  background: linear-gradient(120deg, #4a90e2, #9013fe);
+  color: white;
+}
+
+.skills {
+  max-width: 600px;
+  margin: 3em auto;
+  background: white;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.skills h2 {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.skills ul {
+  list-style: none;
+  padding: 0;
+}
+
+.skills li {
+  padding: 0.5em 0;
+  border-bottom: 1px solid #ccc;
+}
