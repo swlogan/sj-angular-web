@@ -1,11 +1,21 @@
-<app-navigation></app-navigation>
+<div class="full-screen-container">
+  <app-navigation></app-navigation>
 
-<div class="gif-bg">
-  <img src="assets/blue-coding-background.gif" alt="Background" class="gif-image" />
-  <!-- Load gif in for few seconds and then show actual homepage -->
-  <div class="overlay-content">
-    <h1>Shawn Logan</h1>
-    <h1>Resume Website!</h1>
+  <div class="gif-bg">
+    <img src="assets/blue-nebula.jpg" alt="Background" class="gif-image" />
+
+    <div class="overlay-content">
+      <div #introCard class="intro-card wide hidden-card">
+        <img src="assets/shawn-chicago.jpg" alt="Shawn Logan" class="profile-pic large" />
+        <div class="intro-text">
+          <h1>Shawn Logan</h1>
+          <p>Full-Stack Software Engineer | Creative Technologist</p>
+          <p>
+            I’m passionate about crafting elegant digital experiences. This fully custom resume site was developed by me using Angular and hosted on AWS — from backend to frontend, every detail was engineered with performance and design in mind.
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
