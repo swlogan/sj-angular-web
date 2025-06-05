@@ -1,3 +1,47 @@
+.full-screen-container {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Loader styling */
+#app-loader {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 1s ease;
+}
+
+#app-loader img {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.terminal-overlay {
+  position: absolute;
+  z-index: 2;
+  font-family: 'Courier New', monospace;
+  color: #00ffcc;
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px #00ffcc;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Background image */
 .gif-bg {
   position: absolute;
   top: 0;
@@ -5,7 +49,7 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  z-index: -1; /* Keep it behind everything */
+  z-index: -1;
 }
 
 .gif-image {
@@ -18,7 +62,7 @@
   z-index: -1;
 }
 
-
+/* Overlay content */
 .overlay-content {
   position: absolute;
   top: 50%;
@@ -32,21 +76,8 @@
   align-items: center;
 }
 
-/* Main card now horizontal and wider */
-.intro-card.horizontal-layout {
-  display: flex;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: 3rem 4rem;
-  border-radius: 2rem;
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
-  max-width: 900px;
-  width: 90%;
-  animation: fadeIn 2s ease-in-out;
-}
-
+/* Intro card styling */
 .intro-card.wide {
-  /* keep layout styles only */
   background-color: rgba(255, 255, 255, 0.95);
   display: flex;
   flex-direction: row;
@@ -57,24 +88,22 @@
   max-width: 960px;
   width: 90%;
   gap: 2rem;
-}
-
-/* Move animation here so it triggers when class is added */
-.visible-card {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-  animation: fadeIn 1s ease-out;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .hidden-card {
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(20px);
   pointer-events: none;
 }
 
+.visible-card {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
 
-/* Larger profile picture aligned left */
+/* Profile pic */
 .profile-pic.large {
   width: 300px;
   height: 300px;
@@ -84,7 +113,7 @@
   flex-shrink: 0;
 }
 
-/* Text aligned right of photo */
+/* Intro text */
 .intro-text h1 {
   font-size: 2.8rem;
   margin-bottom: 0.5rem;
@@ -96,31 +125,3 @@
   color: #555;
   max-width: 600px;
 }
-
-/* Fade-in animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-.full-screen-container {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  position: relative;
-}
-
-/* Ensure no unwanted scrollbars */
-:host {
-  display: block;
-  height: 100vh;
-  overflow: hidden;
-}
-

@@ -1,73 +1,85 @@
-import { Component, AfterViewInit, Inject, PLATFORM_ID, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import {
+  Component,
+  AfterViewInit,
+  Inject,
+  PLATFORM_ID,
+  NgZone,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavigationComponent],
+  imports: [NavigationComponent, CommonModule],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements AfterViewInit {
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private ngZone: NgZone
-  ) {}
-
-  @ViewChild('introCard', { static: false }) introCard!: ElementRef<HTMLDivElement>;
+  showLoader = false;
 
   typingText = [
     'ACCESSING RESUME DATA...',
     'AUTHENTICATION SUCCESSFUL',
-    'LOADING USER PROFILE...'
+    'LOADING USER PROFILE...',
   ];
 
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private ngZone: NgZone,
+    private cd: ChangeDetectorRef
+  ) {}
+
   ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const loader = document.getElementById('app-loader');
-      const gif = document.getElementById('loader-gif') as HTMLImageElement;
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const navigated = sessionStorage.getItem('navigated') === 'true';
+
+    const reveal = () => {
+      this.ngZone.run(() => {
+        this.showLoader = false;
+      });
+    };
+
+    const runTyping = async () => {
       const terminalText = document.getElementById('terminal-text');
-
-      const hide = () => {
-        if (loader) {
-          loader.classList.add('hidden');
-          setTimeout(() => {
-            loader.style.display = 'none';
-
-            // Force Angular to recognize the class change
-            this.ngZone.run(() => {
-              if (this.introCard?.nativeElement) {
-                this.introCard.nativeElement.classList.remove('hidden-card');
-                this.introCard.nativeElement.classList.add('visible-card');
-              }
-            });
-          }, 1000);
-        }
-      };
-
-      const runTyping = async () => {
-        if (terminalText) {
-          for (const line of this.typingText) {
-            for (let i = 0; i <= line.length; i++) {
-              terminalText.innerHTML = line.slice(0, i) + (i % 2 ? '_' : '');
-              await new Promise(res => setTimeout(res, 40));
-            }
-            terminalText.innerHTML += '<br>';
-            await new Promise(res => setTimeout(res, 600));
-          }
-        }
-
-        hide();
-      };
-
-      if (gif && gif.complete) {
-        runTyping();
-      } else {
-        gif.onload = () => runTyping();
+      if (!terminalText) {
+        console.error('terminalText element not found');
+        reveal();
+        return;
       }
 
-      setTimeout(hide, 7000);
+      for (const line of this.typingText) {
+        for (let i = 0; i <= line.length; i++) {
+          terminalText.innerHTML = line.slice(0, i) + (i % 2 ? '_' : '');
+          await new Promise((res) => setTimeout(res, 40));
+        }
+        terminalText.innerHTML += '<br>';
+        await new Promise((res) => setTimeout(res, 600));
+      }
+
+      await new Promise((res) => setTimeout(res, 700));
+      reveal();
+    };
+
+    if (!navigated) {
+      this.ngZone.run(() => {
+        this.showLoader = true;
+        this.cd.detectChanges(); // force DOM update
+      });
+
+      setTimeout(() => {
+        this.ngZone.run(async () => {
+          await runTyping();
+        });
+      }, 0);
+
+      setTimeout(reveal, 10000); // failsafe timeout
+    } else {
+      reveal();
     }
+
+    sessionStorage.setItem('navigated', 'true');
   }
 }

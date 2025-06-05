@@ -1,17 +1,41 @@
 <div class="full-screen-container">
   <app-navigation></app-navigation>
 
+  <!-- Loader overlay -->
+  <div *ngIf="showLoader" id="app-loader">
+    <img
+      src="assets/blue-coding-background.gif"
+      alt="Loading..."
+      id="loader-gif"
+    />
+    <div class="terminal-overlay">
+      <div id="terminal-text"></div>
+    </div>
+  </div>
+
+  <!-- Background and main content -->
   <div class="gif-bg">
     <img src="assets/blue-nebula.jpg" alt="Background" class="gif-image" />
 
     <div class="overlay-content">
-      <div #introCard class="intro-card wide hidden-card">
-        <img src="assets/shawn-chicago.jpg" alt="Shawn Logan" class="profile-pic large" />
+      <div
+        class="intro-card wide"
+        [class.hidden-card]="showLoader"
+        [class.visible-card]="!showLoader"
+      >
+        <img
+          src="assets/shawn-chicago.jpg"
+          alt="Shawn Logan"
+          class="profile-pic large"
+        />
         <div class="intro-text">
           <h1>Shawn Logan</h1>
-          <p>Full-Stack Software Engineer | Creative Technologist</p>
+          <p>Senior Full-Stack Software Engineer | Creative Technologist</p>
           <p>
-            I’m passionate about crafting elegant digital experiences. This fully custom resume site was developed by me using Angular and hosted on AWS — from backend to frontend, every detail was engineered with performance and design in mind.
+            I’m passionate about crafting elegant digital experiences. This
+            fully custom resume site was developed by me using Angular and
+            hosted on AWS — from backend to frontend, every detail was
+            engineered with performance and design in mind.
           </p>
         </div>
       </div>
@@ -19,3 +43,14 @@
   </div>
 </div>
 
+
+
+
+<!-- Write a firebase backend to check the weather.  -->
+ <!-- "Let your inner star shine — get weather forecasts that’re out of this world!"
+
+"From stardust to sunshine — lighting your path with stellar weather updates!" 
+
+Above shows the weather for your local area to demonstrate my use of serverless Firebase functions to dynamically display data through a Weather Api-->
+
+<!-- The weather above displays real-time local conditions, showcasing my implementation of serverless Firebase Functions to dynamically fetch and present data from a Weather API. -->
