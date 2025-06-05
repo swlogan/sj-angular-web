@@ -1,11 +1,39 @@
+// Colors
 $teal: #29c9b3;
 $black: #282525;
 $white: #ffffff;
 
+$active-color: #5ac8fa;  // bright lime green for active tab
+$inactive-color: rgba(41, 201, 179, 0.75);
+
+$cyan-color: #00fff7;
+$cyan-glow: rgba(0, 255, 247, 0.7);
+
+// Glowing text mixin
+@mixin glowing-text($color, $glow) {
+  color: $color;
+  text-shadow:
+    0 0 5px $glow,
+    0 0 10px $glow,
+    0 0 20px $glow,
+    0 0 40px $glow;
+}
+
+// Set dark background for the entire page
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #000; // dark space background
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: $white;
+  height: 100%;
+}
+
+// Toolbar container
 .main-toolbar {
   background-color: $black;
   height: 100px;
-  padding: 0;
+  padding: 0 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,40 +43,54 @@ $white: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
+// Nav wrapper
 .nav-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+// Site title with glowing effect
 .site-title {
-  color: $teal;
+  @include glowing-text($cyan-color, $cyan-glow);
   font-size: 2.4rem;
   font-weight: bold;
   margin-bottom: 1rem;
   letter-spacing: 1px;
 }
 
+// Navigation links container
 .nav-links {
   display: flex;
   gap: 2rem;
 }
 
+// Nav links style with glowing text and hover effect
 .nav-links a {
-  color: $white;
+  color: $inactive-color;
   font-size: 1.3rem;
   font-weight: 600;
   text-transform: uppercase;
   border-bottom: 2px solid transparent;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease, filter 0.3s ease, text-shadow 0.3s ease, box-shadow 0.3s ease;
+  filter: brightness(0.9);
+  text-shadow: none;
+  position: relative;
 }
 
 .nav-links a:hover {
   color: $teal;
-  border: 2px solid $teal;
+  filter: brightness(1.1);
+  text-shadow:
+    0 0 8px $teal,
+    0 0 16px $teal,
+    0 0 24px rgba(41, 201, 179, 0.6);
+  border-bottom: 2px solid transparent;
 }
 
 .active-link {
-  color: $teal !important;
-  border-bottom: 2px solid $teal;
+  color: $active-color !important;
+  font-weight: 700;
+  filter: brightness(5);
+
 }
