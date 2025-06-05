@@ -39,6 +39,7 @@ export class HomeComponent implements AfterViewInit {
     const reveal = () => {
       this.ngZone.run(() => {
         this.showLoader = false;
+        sessionStorage.setItem('navigated', 'true');
       });
     };
 
@@ -80,6 +81,6 @@ export class HomeComponent implements AfterViewInit {
       reveal();
     }
 
-    sessionStorage.setItem('navigated', 'true');
+    
   }
 }
