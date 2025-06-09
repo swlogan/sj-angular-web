@@ -1,0 +1,39 @@
+.contact-background {
+  min-height: 100vh;
+  background: #f5f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 48px;
+}
+
+.contact-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 32px 40px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.tagline {
+  color: #888;
+  font-size: 1.1em;
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+a {
+  color: #1976d2;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -10,14 +10,14 @@ import { isPlatformBrowser } from '@angular/common';
 import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
-  selector: 'app-resume',
+  selector: 'app-contact',
   standalone: true,
   imports: [NavigationComponent],
-  templateUrl: './resume.component.html',
-  styleUrls: ['./resume.component.scss']
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.scss']
 })
-export class ResumeComponent implements AfterViewInit {
-  @ViewChild('resumeCard') resumeCard!: ElementRef<HTMLDivElement>;
+export class ContactComponent implements AfterViewInit {
+  @ViewChild('contactCard') contactCard!: ElementRef<HTMLDivElement>;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
