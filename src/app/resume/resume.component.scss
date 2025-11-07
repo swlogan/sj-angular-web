@@ -5,17 +5,20 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 4rem 1rem;
+  align-items: flex-start;
+  padding: 5rem 1rem 2rem;
+  box-sizing: border-box;
 }
 
 .resume-card {
   background-color: rgba(255, 255, 255, 0.97);
   border-radius: 2rem;
   padding: 3rem 2rem;
-  width: 95%;
+  width: 100%;
   max-width: 1000px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   transition: all 0.5s ease;
+  box-sizing: border-box;
 }
 
 .resume-content {
@@ -26,6 +29,11 @@
 .resume-content h1,
 .resume-content h2 {
   margin-top: 0;
+  font-size: 2rem;
+}
+
+.resume-content h1 {
+  font-size: 2.5rem;
 }
 
 .resume-content ul {
@@ -39,4 +47,44 @@
 
 .job {
   margin-bottom: 2.5rem;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* ✅ Mobile responsiveness */
+@media (max-width: 768px) {
+  .resume-background {
+    padding: 4rem 1rem 2rem;
+    background-position: center top;
+  }
+
+  .resume-card {
+    padding: 2rem 1.5rem;
+    border-radius: 1rem;
+  }
+
+  .resume-content h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .resume-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .tagline {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .job ul {
+    padding-left: 1rem;
+  }
+
+  .section, .job {
+    margin-bottom: 1.5rem;
+  }
 }
