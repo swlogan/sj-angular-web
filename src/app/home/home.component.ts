@@ -44,22 +44,67 @@ export class HomeComponent implements AfterViewInit {
     };
 
     const runTyping = async () => {
-      const terminalText = document.getElementById('terminal-text');
+      // Wait for DOM element to be available
+      let terminalText: HTMLElement | null = null;
+      let attempts = 0;
+      while (!terminalText && attempts < 50) {
+        terminalText = document.getElementById('terminal-text');
+        if (!terminalText) {
+          await new Promise((res) => setTimeout(res, 100));
+          attempts++;
+        }
+      }
+
       if (!terminalText) {
-        console.error('terminalText element not found');
+        console.error('terminalText element not found after waiting');
         reveal();
         return;
       }
 
+      console.log('Terminal text element found, starting typing effect');
+      
+      let currentDisplayText = '';
+      let cursorVisible = true;
+      let blinkInterval: any = null;
+      
+      const updateDisplay = () => {
+        if (terminalText) {
+          terminalText.innerHTML = currentDisplayText + (cursorVisible ? '<span class="cursor">_</span>' : '');
+        }
+      };
+
+      // Start cursor blinking
+      blinkInterval = setInterval(() => {
+        cursorVisible = !cursorVisible;
+        if (terminalText) {
+          terminalText.innerHTML = currentDisplayText + (cursorVisible ? '<span class="cursor">_</span>' : '');
+        }
+      }, 500);
+
+      // Initial display with cursor
+      updateDisplay();
+
       for (const line of this.typingText) {
         for (let i = 0; i <= line.length; i++) {
-          terminalText.innerHTML = line.slice(0, i) + (i % 2 ? '_' : '');
-          await new Promise((res) => setTimeout(res, 40));
+          currentDisplayText = line.slice(0, i);
+          cursorVisible = true; // Keep cursor visible while typing
+          updateDisplay();
+          await new Promise((res) => setTimeout(res, 50));
         }
-        terminalText.innerHTML += '<br>';
+        currentDisplayText = line + '<br>';
+        updateDisplay();
         await new Promise((res) => setTimeout(res, 600));
       }
 
+      if (blinkInterval) {
+        clearInterval(blinkInterval);
+      }
+      
+      // Final display without cursor
+      if (terminalText) {
+        terminalText.innerHTML = currentDisplayText;
+      }
+      
       await new Promise((res) => setTimeout(res, 700));
       reveal();
     };
@@ -70,11 +115,10 @@ export class HomeComponent implements AfterViewInit {
         this.cd.detectChanges(); // force DOM update
       });
 
+      // Wait for Angular to render the DOM
       setTimeout(() => {
-        this.ngZone.run(async () => {
-          await runTyping();
-        });
-      }, 0);
+        runTyping();
+      }, 200);
 
       setTimeout(reveal, 10000); // failsafe timeout
     } else {
