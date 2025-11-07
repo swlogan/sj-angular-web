@@ -1,0 +1,21 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm install 20 || nvm use 20
+        - if [ -f package-lock.json ]; then npm ci; else npm install; fi
+    build:
+      commands:
+        - npx ng build --configuration production
+        # Show where the build actually went so you can set baseDirectory correctly
+        - echo "---- dist tree ----"
+        - find dist -maxdepth 2 -type d -print || true
+  artifacts:
+    # Start with the broadest target during debugging:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
