@@ -1,6 +1,7 @@
 import {
   Component,
   AfterViewInit,
+  OnInit,
   Inject,
   PLATFORM_ID,
   NgZone,
@@ -16,8 +17,8 @@ import { NavigationComponent } from '../navigation/navigation.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements AfterViewInit {
-  showLoader = false;
+export class HomeComponent implements OnInit, AfterViewInit {
+  showLoader = true; // Start with loader visible to prevent flash
 
   typingText = [
     'ACCESSING RESUME DATA...',
@@ -30,6 +31,16 @@ export class HomeComponent implements AfterViewInit {
     private ngZone: NgZone,
     private cd: ChangeDetectorRef
   ) {}
+
+  ngOnInit(): void {
+    // Check sessionStorage immediately to prevent flash on subsequent visits
+    if (isPlatformBrowser(this.platformId)) {
+      const navigated = sessionStorage.getItem('navigated') === 'true';
+      if (navigated) {
+        this.showLoader = false;
+      }
+    }
+  }
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
