@@ -87,6 +87,10 @@ body {
   max-width: 100vw;
   height: auto;
   overflow: hidden;
+  // Initially hidden to prevent flash, will be shown when loader is done
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
 .gif-image {
@@ -144,6 +148,19 @@ body {
 .hidden-card {
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
+}
+
+// Hide main content when loader is active to prevent flash
+.full-screen-container.loader-active .gif-bg {
+  visibility: hidden;
+  opacity: 0;
+}
+
+// Show content when loader is not active
+.full-screen-container:not(.loader-active) .gif-bg {
+  visibility: visible;
+  opacity: 1;
 }
 
 .nav {
