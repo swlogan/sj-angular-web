@@ -1,0 +1,84 @@
+<app-navigation></app-navigation>
+
+<div class="ai-labs-background">
+  <div class="ai-labs-card" #aiLabsCard>
+    <section class="header">
+      <h1>AI Labs</h1>
+      <p class="tagline">Resume Bullet Strength Analyzer</p>
+    </section>
+
+    <section class="section">
+      <p class="description">
+        Get instant AI-powered feedback on your resume bullet points. Enter a bullet point below to see how strong it is and get suggestions for improvement.
+      </p>
+      
+      <div class="analysis-form">
+        <textarea
+          [(ngModel)]="bulletText"
+          placeholder="Enter a resume bullet point (e.g., 'Implemented caching to reduce API latency by 40%')"
+          class="bullet-input"
+          rows="4"
+          [disabled]="isAnalyzing">
+        </textarea>
+        
+        <div class="button-group">
+          <button 
+            class="analyze-btn" 
+            (click)="analyzeBullet()"
+            [disabled]="isAnalyzing || !bulletText.trim()">
+            <span *ngIf="!isAnalyzing">Analyze Bullet</span>
+            <span *ngIf="isAnalyzing">Analyzing...</span>
+          </button>
+          
+          <button 
+            class="clear-btn" 
+            (click)="clearAnalysis()"
+            [disabled]="isAnalyzing">
+            Clear
+          </button>
+        </div>
+      </div>
+
+      <div class="prediction-result" *ngIf="prediction">
+        <h3>Analysis Result</h3>
+        <div class="result-card">
+          <div class="result-label">
+            <span class="label-badge" [ngClass]="getLabelClass(prediction.label)">
+              {{ getLabelDisplay(prediction.label) }}
+            </span>
+            <span class="confidence">
+              Confidence: {{ (prediction.confidence * 100).toFixed(1) }}%
+            </span>
+          </div>
+          <div class="result-description" *ngIf="prediction.label">
+            <p *ngIf="prediction.label.toLowerCase() === 'strong'">
+              ✅ This is a strong bullet point! It likely includes quantifiable results, specific technologies, or clear impact.
+            </p>
+            <p *ngIf="prediction.label.toLowerCase() === 'medium'">
+              ⚠️ This is a decent bullet point, but could be improved with specific metrics, technologies, or quantifiable results.
+            </p>
+            <p *ngIf="prediction.label.toLowerCase() === 'weak'">
+              💡 This bullet point is too generic. Try adding specific technologies, quantifiable results, or clear impact statements.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="error">
+        <p>{{ error }}</p>
+      </div>
+
+      <div class="info-section">
+        <h3>Tips for Strong Resume Bullets</h3>
+        <ul>
+          <li>Include quantifiable results (percentages, numbers, dollar amounts)</li>
+          <li>Mention specific technologies or tools used</li>
+          <li>Show clear impact or outcomes</li>
+          <li>Use action verbs (Built, Designed, Led, Implemented, etc.)</li>
+          <li>Avoid generic phrases like "Worked on" or "Helped with"</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</div>
+
