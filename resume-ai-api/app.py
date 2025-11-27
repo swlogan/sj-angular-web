@@ -11,14 +11,21 @@ import os
 app = FastAPI(title="Resume Bullet Strength API", version="1.0.0")
 
 # Configure CORS to allow Angular app to call this API
+# Get allowed origins from environment or use defaults
+allowed_origins_env = os.getenv("ALLOWED_ORIGINS", "http://localhost:4200,http://localhost:4000")
+allowed_origins = [origin.strip() for origin in allowed_origins_env.split(",") if origin.strip()]
+
+# If "*" is in the list, allow all origins (but can't use with credentials)
+if "*" in allowed_origins:
+    allowed_origins = ["*"]
+    allow_creds = False
+else:
+    allow_creds = True
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:4200",  # Angular dev server
-        "http://localhost:4000",  # Alternative Angular port
-        "*"  # In production, replace with your actual domain
-    ],
-    allow_credentials=True,
+    allow_origins=allowed_origins,
+    allow_credentials=allow_creds,
     allow_methods=["*"],
     allow_headers=["*"],
 )
